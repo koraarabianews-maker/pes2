@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>المتجر الرسمي - عروض حصرية</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body { background: linear-gradient(135deg, #0a0a2e 0%, #1a0b3c 50%, #0d0d3a 100%); color: white; direction: rtl; min-height: 100vh; padding-bottom: 30px; }
+
+        /* الهيدر */
+        .header { background-color: rgba(10, 10, 46, 0.9); padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ff0055; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); }
+        .header .logo-area { display: flex; align-items: center; gap: 10px; font-weight: 900; font-size: 18px; color: #ff0055; }
+        .header .logo-area span { color: #00d2ff; }
+
+        /* البانر */
+        .banner { width: 100%; padding: 30px 20px; text-align: center; background: radial-gradient(circle, rgba(255,0,85,0.2) 0%, rgba(10,10,46,0) 70%); }
+        .banner h1 { font-size: 24px; font-weight: 900; color: #fff; text-shadow: 0 0 10px #ff0055, 0 0 20px #00d2ff; margin-bottom: 10px; }
+
+        /* تسجيل الدخول */
+        .login-container { padding: 0 20px; margin-bottom: 20px; }
+        .login-box { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 12px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .login-box p { font-size: 13px; color: #aaa; margin-bottom: 12px; }
+        .login-btn { background: linear-gradient(90deg, #ff0055, #cc0000); color: white; text-decoration: none; padding: 15px; border-radius: 8px; display: block; font-size: 16px; font-weight: 900; box-shadow: 0 4px 15px rgba(255, 0, 85, 0.4); transition: 0.2s; }
+        .login-btn:active { transform: scale(0.97); }
+
+        /* الفئات */
+        .categories { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 20px; margin-bottom: 20px; justify-content: center; }
+        .cat-btn { background: rgba(255, 255, 255, 0.05); color: #ccc; border: 1px solid #444; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; }
+        .cat-btn.active { background-color: #ff0055; color: white; border-color: #ff0055; box-shadow: 0 0 10px rgba(255, 0, 85, 0.5); }
+
+        /* شبكة المنتجات */
+        .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 15px; }
+        
+        .product-card { 
+            background: linear-gradient(180deg, #15153a 0%, #0a0a2e 100%); 
+            border: 1px solid #2a2a6a; 
+            border-radius: 12px; 
+            padding: 12px; 
+            text-align: center; 
+            position: relative; 
+            display: flex; 
+            flex-direction: column; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5); 
+        }
+
+        .badge { position: absolute; top: 0; right: 0; background-color: #ff0055; color: white; font-size: 9px; padding: 3px 8px; border-radius: 0 12px 0 8px; font-weight: bold; z-index: 2; }
+        
+        .product-card .title { font-size: 13px; font-weight: 700; margin: 15px 0 10px; color: #eee; min-height: 38px; z-index: 2; }
+
+        /* تصميم الأيقونات بالـ CSS (عشان تظهر دايماً) */
+        .image-box {
+            width: 100%; height: 90px; display: flex; justify-content: center; align-items: center; margin-bottom: 10px;
+        }
+
+        /* شكل العملة الذهبية */
+        .coin-icon {
+            width: 60px; height: 60px; background: radial-gradient(circle at 30% 30%, #fff785, #ffd700, #b8860b);
+            border-radius: 50%; border: 3px solid #daa520; box-shadow: 0 0 15px rgba(255, 215, 0, 0.6), inset 0 -4px 10px rgba(0,0,0,0.3);
+            display: flex; justify-content: center; align-items: center; position: relative;
+        }
+        .coin-icon::after { content: '⚡'; font-size: 24px; color: #8b6508; font-weight: bold; text-shadow: 1px 1px 2px rgba(255,255,255,0.5); }
+
+        /* شكل اللاعب */
+        .player-icon {
+            width: 70px; height: 70px; background: linear-gradient(135deg, #00d2ff, #3a7bd5);
+            border-radius: 50%; border: 3px solid #fff; box-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
+            display: flex; justify-content: center; align-items: center;
+        }
+        .player-icon::after { content: '👤'; font-size: 40px; filter: invert(1); }
+
+        /* السعر */
+        .product-card .price { background: #ffd700; color: #000; padding: 8px; border-radius: 6px; font-weight: 900; font-size: 14px; margin-top: auto; box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3); z-index: 2; }
+        
+        .timer { font-size: 10px; color: #ff0055; margin-top: 5px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo-area"><span>⚡</span> GIFT <span>STORE</span></div>
+        <div style="font-size: 12px; color: #888;">المتجر الرسمي</div>
+    </header>
+
+    <div class="banner">
+        <h1>عروض حصرية ومذهلة</h1>
+        <p style="font-size: 14px; color: #00d2ff;">أكبر تجميعة باكات وعملات</p>
+    </div>
+
+    <div class="login-container">
+        <div class="login-box">
+            <p>يجب تسجيل الدخول لإتمام عمليات الشراء</p>
+            <a href="https://koraarabianews-maker.github.io/index.html" class="login-btn">تسجيل الدخول باستخدام ID</a>
+        </div>
+    </div>
+
+    <div class="categories">
+        <div class="cat-btn">Steam (مميز)</div>
+        <div class="cat-btn active">iOS / Android</div>
+        <div class="cat-btn">باكات نادرة</div>
+        <div class="cat-btn">عملات ذهبية</div>
+    </div>
+
+    <!-- شبكة المنتجات (زودنا العروض لـ 12 عرض) -->
+    <div class="products-grid">
+        
+        <div class="product-card">
+            <span class="badge">لفترة محدودة</span>
+            <div class="title">Starter Set: Player 1</div>
+            <div class="image-box"><div class="player-icon"></div></div>
+            <div class="price">39.99 EGP</div>
+        </div>
+
+        <div class="product-card">
+            <div class="title">Starter Set: Player 2</div>
+            <div class="image-box"><div class="player-icon"></div></div>
+            <div class="price">119.99 EGP</div>
+        </div>
+
+        <div class="product-card">
+            <span class="badge">الأكثر مبيعاً</span>
+            <div class="title">عملات ذهبية 315</div>
+            <div class="image-box"><div class="coin-icon"></div></div>
+            <div class="price">139.99 EGP</div>
+        </div>
+
+        <div class="product-card">
+            <div class="title">عملات ذهبية 105</div>
+            <div class="image-box"><div class="coin-icon"></div></div>
+            <div class="price">46.99 EGP</div>
+        </div>
+
+        <div class="product-card">
+            <div class="title">عملات ذهبية 1050</div>
+            <div class="image-box"><div class="coin-icon"></div></div>
+            <div class="price">449.99 EGP</div>
+        </div>
+
+        <div class="product-card">
+            <div class="title">عملات ذهبية 525</div>
+            <div class="image-box"><div class="coin-icon"></div></div>
+            <div class="price">229.99 EGP</div>
+        </div>
+
+        <div class="product-card">
+            <span class="badge">عرض خاص</span>
+            <div class="title">عملات ذهبية 3150</div>
+            <div class="image-box"><div class="coin-icon"></div></div>
+            <div class="price">1,299.99 EGP</div>
+        </div>
+
+        <div class="product-card">
+            <div class="title">عملات ذهبية 2100</div>
+            <div class="image-box"><div class="coin-icon"></div></div>
+            <div class="price">879.99 EGP</div>
+        </div>
+
+        <div class="product-card">
+            <div class="title">عملات ذهبية 10500</div>
+            <div class="image-box"><div class="coin-icon"></div></div>
+            <div class="price">3,899.99 EGP</div>
+        </div>
+        
+        <div class="product-card">
+            <div class="title">عملات ذهبية 5250</div>
+            <div class="image-box"><div class="coin-icon"></div></div>
+            <div class="price">2,099.99 EGP</div>
+        </div>
+
+        <div class="product-card">
+            <span class="badge">أسطوري</span>
+            <div class="title">عملات ذهبية 30000</div>
+            <div class="image-box"><div class="coin-icon"></div></div>
+            <div class="price">9,999.99 EGP</div>
+        </div>
+
+        <div class="product-card">
+            <div class="title">عملات ذهبية 15750</div>
+            <div class="image-box"><div class="coin-icon"></div></div>
+            <div class="price">5,599.99 EGP</div>
+        </div>
+
+    </div>
+
+</body>
+</html>
